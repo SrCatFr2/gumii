@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>グミチェッカー | Gumii Checker</title>
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600&family=IBM+Plex+Mono&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="styles/_variables.css">
+    <link rel="stylesheet" href="styles/_layout.css">
+    <link rel="stylesheet" href="styles/_components.css">
+    <link rel="stylesheet" href="styles/_animations.css">
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg" class="matrix-background"></canvas>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <!-- Panel del Checker -->
+        <div class="checker-panel">
+            <!-- Header -->
+            <div class="cyber-header">
+                <div class="logo-container">
+                    <canvas id="cyber-logo" width="50" height="50"></canvas>
+                    <div class="title-container">
+                        <h1 class="cyber-title glitch" data-text="Gumii Checker">Gumii Checker</h1>
+                        <span class="jp-text neon-pulse">グミチェッカー v2.0</span>
+                    </div>
+                </div>
+                <div class="stats-container">
+                    <div class="counter">
+                        <span class="jp-text">残り</span>
+                        <span id="remaining-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-section">
+                <div class="cyber-label">
+                    <i class="ri-bank-card-line"></i>
+                    <span class="jp-text">カード入力</span>
+                </div>
+                <div class="input-area">
+                    <textarea 
+                        id="cards-input" 
+                        class="cyber-input"
+                        placeholder="CC|MM|YY|CVV"
+                        spellcheck="false"
+                    ></textarea>
+                    <div class="cyber-decoration">
+                        <div class="corner top-left"></div>
+                        <div class="corner top-right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="corner bottom-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="control-section">
+                <button id="start-btn" class="cyber-button">
+                    <i class="ri-play-circle-line"></i>
+                    <span class="btn-text">開始</span>
+                    <span class="btn-en">START</span>
+                </button>
+                <button id="stop-btn" class="cyber-button" disabled>
+                    <i class="ri-stop-circle-line"></i>
+                    <span class="btn-text">停止</span>
+                    <span class="btn-en">STOP</span>
+                </button>
+            </div>
+
+            <!-- Card Types -->
+            <div class="cards-info">
+                <div class="info-header">
+                    <i class="ri-bank-card-2-line"></i>
+                    <span class="jp-text">対応カード</span>
+                </div>
+                <div class="cards-grid">
+                    <div class="card-type hover-lift">
+                        <i class="ri-visa-line"></i>
+                        <span>VISA</span>
+                    </div>
+                    <div class="card-type hover-lift">
+                        <i class="ri-mastercard-line"></i>
+                        <span>MASTER</span>
+                    </div>
+                    <div class="card-type hover-lift">
+                        <i class="ri-bank-card-line"></i>
+                        <span>AMEX</span>
+                    </div>
+                    <div class="card-type hover-lift">
+                        <i class="ri-bank-card-2-line"></i>
+                        <span>DISCOVER</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel">
+            <div class="results-header">
+                <div class="header-title">
+                    <i class="ri-dashboard-line"></i>
+                    <span class="jp-text">結果</span>
+                    <span class="en-text">RESULTS</span>
+                </div>
+                <div class="header-actions">
+                    <button onclick="clearResults()" class="cyber-button mini">
+                        <i class="ri-refresh-line"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <!-- Lives -->
+                <div class="result-section lives">
+                    <div class="section-header">
+                        <div class="header-title">
+                            <i class="ri-checkbox-circle-line"></i>
+                            <span class="jp-text">ライブ</span>
+                        </div>
+                        <div class="counter" id="lives-counter">0</div>
+                    </div>
+                    <div class="result-content custom-scrollbar" id="lives-list"></div>
+                </div>
+
+                <!-- Deads -->
+                <div class="result-section deads">
+                    <div class="section-header">
+                        <div class="header-title">
+                            <i class="ri-close-circle-line"></i>
+                            <span class="jp-text">デッド</span>
+                        </div>
+                        <div class="counter" id="deads-counter">0</div>
+                    </div>
+                    <div class="result-content custom-scrollbar" id="deads-list"></div>
+                </div>
+
+                <!-- Errors -->
+                <div class="result-section errors">
+                    <div class="section-header">
+                        <div class="header-title">
+                            <i class="ri-error-warning-line"></i>
+                            <span class="jp-text">エラー</span>
+                        </div>
+                        <div class="counter" id="errors-counter">0</div>
+                    </div>
+                    <div class="result-content custom-scrollbar" id="errors-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Configuración del canvas de Matrix
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+        const charSize = 16;
+        const columns = canvas.width / charSize;
+        const drops = new Array(Math.floor(columns)).fill(1);
+        const neonPink = '#FF69B4';
+        const darkPink = '#FF1493';
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = `${charSize}px monospace`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = darkPink;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                const x = i * charSize;
+                const y = drops[i] * charSize;
+
+                if (drops[i] * charSize < 50) {
+                    ctx.fillStyle = '#FFF';
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = neonPink;
+                } else {
+                    ctx.fillStyle = neonPink;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = darkPink;
+                }
+
+                ctx.fillText(text, x, y);
+
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+
+        // Checker Logic
+        let isChecking = false;
+        let remainingCards = [];
+
+        // Event Listeners
+        document.getElementById('start-btn').addEventListener('click', startCheck);
+        document.getElementById('stop-btn').addEventListener('click', stopCheck);
+
+        async function startCheck() {
+            const input = document.getElementById('cards-input').value;
+            remainingCards = input.split('\n').filter(card => card.trim());
+            
+            if (remainingCards.length > 20) {
+                alert('最大20枚のカードまで！');
+                return;
+            }
+
+            if (remainingCards.length === 0) {
+                alert('���ードを入力してください！');
+                return;
+            }
+
+            isChecking = true;
+            document.getElementById('start-btn').disabled = true;
+            document.getElementById('stop-btn').disabled = false;
+            document.getElementById('remaining-count').textContent = remainingCards.length;
+            
+            processNextCard();
+        }
+
+        function stopCheck() {
+            isChecking = false;
+            document.getElementById('start-btn').disabled = false;
+            document.getElementById('stop-btn').disabled = true;
+        }
+
+        async function processNextCard() {
+            if (!isChecking || remainingCards.length === 0) {
+                stopCheck();
+                return;
+            }
+
+            const card = remainingCards.shift();
+            document.getElementById('remaining-count').textContent = remainingCards.length;
+
+            try {
+                const result = await checkCard(card);
+                addResultToList(result, card);
+            } catch (error) {
+                addErrorToList(card, error.message);
+            }
+
+            // Esperar 1.5 segundos antes de la siguiente tarjeta
+            setTimeout(() => {
+                if (isChecking) {
+                    processNextCard();
+                }
+            }, 1500);
+        }
+
+        async function checkCard(card) {
+            const [cc, month, year, cvv] = card.split('|').map(part => part.trim());
+            
+            try {
+                const response = await fetch('/check-card', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ cc, month, year, cvv })
+                });
+
+                const result = await response.json();
+                return {
+                    success: result.success,
+                    status: result.status,
+                    message: result.message,
+                    time: result.time
+                };
+            } catch (error) {
+                throw new Error('Check failed');
+            }
+        }
+
+        function addResultToList(result, card) {
+            const listId = result.success ? 'lives-list' : 'deads-list';
+            const list = document.getElementById(listId);
+            
+            const element = document.createElement('div');
+            element.className = `result-card ${result.success ? 'live' : 'dead'}`;
+            element.innerHTML = `
+                <div class="card-header">
+                    <span class="card-number">${card}</span>
+                    <span class="card-status">${result.status}</span>
+                </div>
+                <div class="card-details">
+                    <span class="time">⏱ ${result.time}s</span>
+                    ${result.message ? `<span class="message">${result.message}</span>` : ''}
+                </div>
+            `;
+            
+            list.insertBefore(element, list.firstChild);
+            updateCounters();
+        }
+
+        function addErrorToList(card, message) {
+            const list = document.getElementById('errors-list');
+            const element = document.createElement('div');
+            element.className = 'result-card error';
+            element.innerHTML = `
+                <div class="card-header">
+                    <span class="card-number">${card}</span>
+                    <span class="card-status">ERROR</span>
+                </div>
+                <div class="card-details">
+                    <span class="message">${message}</span>
+                </div>
+            `;
+            
+            list.insertBefore(element, list.firstChild);
+            updateCounters();
+        }
+
+        function updateCounters() {
+            ['lives', 'deads', 'errors'].forEach(type => {
+                const counter = document.getElementById(`${type}-counter`);
+                const list = document.getElementById(`${type}-list`);
+                counter.textContent = list.children.length;
+            });
+        }
+
+        function clearResults() {
+            ['lives-list', 'deads-list', 'errors-list'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            updateCounters();
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCounters();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+/* Reset y Base */
+/* Matrix Background */
+.matrix-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #000;
+}
+
+/* Overlay para mejorar la legibilidad */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.7),
+        rgba(255, 105, 180, 0.1)
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Ajuste del container para el fondo */
+.container {
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(3px);
+}
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--pure-white);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Container Principal */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-xl);
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: var(--space-xl);
+    height: 100vh;
+    position: relative;
+}
+
+/* Panel del Checker */
+.checker-panel {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    border: var(--border-medium);
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: var(--blur-md);
+}
+
+.checker-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--kawaii-gradient);
+    box-shadow: var(--neon-pink-glow);
+}
+
+/* Panel de Resultados */
+.results-panel {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    border: var(--border-medium);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: var(--blur-md);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: var(--space-md);
+    overflow: hidden;
+}
+
+/* Secciones de Resultado */
+.result-section {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    border: var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.result-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--cyber-gradient);
+}
+
+/* Header Sections */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--space-sm);
+    border-bottom: var(--border-light);
+}
+
+/* Scrollable Content */
+.result-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: var(--space-sm);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sakura-pink);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--deep-pink);
+}
+
+/* Media Queries */
+@media (max-width: 1400px) {
+    .container {
+        padding: var(--space-md);
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .checker-panel,
+    .results-panel {
+        max-height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: var(--space-sm);
+    }
+
+    .results-grid {
+        grid-template-rows: auto;
+    }
+}
+
+/* Grid Utilities */
+.grid {
+    display: grid;
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+.gap-lg { gap: var(--space-lg); }
+
+/* Flex Utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }

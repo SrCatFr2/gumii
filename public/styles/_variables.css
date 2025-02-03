@@ -1,0 +1,101 @@
+:root {
+    /* Paleta Principal */
+    --sakura-pink: #FF69B4;
+    --soft-pink: #FFB6C1;
+    --deep-pink: #FF1493;
+    --neon-pink: #FF00FF;
+    --cyber-blue: #00F0FF;
+    --pure-white: #FFFFFF;
+    --ghost-white: #F8F8FF;
+    --shadow-black: #000000;
+
+    /* Gradientes */
+    --kawaii-gradient: linear-gradient(
+        45deg,
+        var(--sakura-pink) 0%,
+        var(--soft-pink) 50%,
+        var(--pure-white) 100%
+    );
+
+    --cyber-gradient: linear-gradient(
+        135deg,
+        var(--deep-pink) 0%,
+        var(--neon-pink) 50%,
+        var(--cyber-blue) 100%
+    );
+
+    --samurai-gradient: linear-gradient(
+        90deg,
+        var(--shadow-black) 0%,
+        var(--deep-pink) 50%,
+        var(--shadow-black) 100%
+    );
+
+    /* Efectos Neón */
+    --neon-pink-glow: 0 0 5px var(--sakura-pink),
+                      0 0 10px var(--sakura-pink),
+                      0 0 15px var(--deep-pink),
+                      0 0 20px var(--neon-pink);
+
+    --neon-white-glow: 0 0 5px var(--pure-white),
+                       0 0 10px var(--pure-white),
+                       0 0 15px var(--ghost-white),
+                       0 0 20px var(--pure-white);
+
+    /* Fondos */
+    --bg-primary: #0a0a0f;
+    --bg-secondary: rgba(15, 15, 20, 0.95);
+    --bg-tertiary: rgba(20, 20, 25, 0.9);
+
+    /* Bordes */
+    --border-light: 1px solid rgba(255, 105, 180, 0.3);
+    --border-medium: 2px solid rgba(255, 105, 180, 0.5);
+    --border-heavy: 3px solid rgba(255, 105, 180, 0.7);
+
+    /* Sombras */
+    --shadow-soft: 0 4px 6px rgba(255, 105, 180, 0.1);
+    --shadow-medium: 0 6px 12px rgba(255, 105, 180, 0.2);
+    --shadow-hard: 0 8px 16px rgba(255, 105, 180, 0.3);
+
+    /* Bordes Redondeados */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* Espaciado */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+
+    /* Fuentes */
+    --font-main: 'Chakra Petch', sans-serif;
+    --font-jp: 'Noto Sans JP', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    /* Tamaños de Fuente */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-md: 1rem;
+    --text-lg: 1.25rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2rem;
+
+    /* Transiciones */
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+    --transition-slow: 500ms ease;
+
+    /* Z-index */
+    --z-back: -1;
+    --z-normal: 1;
+    --z-front: 10;
+    --z-modal: 100;
+
+    /* Filtros */
+    --blur-sm: blur(4px);
+    --blur-md: blur(8px);
+    --blur-lg: blur(16px);
+}

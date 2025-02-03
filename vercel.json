@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/check-card",
+      "methods": ["POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/api/stripe/check",
+      "methods": ["POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/api/form-nonce",
+      "methods": ["GET"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/api/process-payment",
+      "methods": ["POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/api/stripe/token",
+      "methods": ["POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/api/stripe/session",
+      "methods": ["POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/styles/_variables\\.css",
+      "dest": "/public/styles/_variables.css"
+    },
+    {
+      "src": "/styles/_layout\\.css",
+      "dest": "/public/styles/_layout.css"
+    },
+    {
+      "src": "/styles/_components\\.css",
+      "dest": "/public/styles/_components.css"
+    },
+    {
+      "src": "/styles/_animations\\.css",
+      "dest": "/public/styles/_animations.css"
+    },
+    {
+      "src": "/js/matrix\\.js",
+      "dest": "/public/js/matrix.js"
+    },
+    {
+      "src": "/js/logo\\.js",
+      "dest": "/public/js/logo.js"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/public/assets/$1"
+    },
+    {
+      "src": "/(.*)\\.ico",
+      "dest": "/public/$1.ico"
+    },
+    {
+      "src": "/(.*)\\.png",
+      "dest": "/public/$1.png"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "STRIPE_PUBLIC_KEY": "@stripe-public-key",
+    "STRIPE_SECRET_KEY": "@stripe-secret-key"
+  }
+}
