@@ -12,36 +12,9 @@
   ],
   "routes": [
     {
-      "src": "/api/check",
+      "src": "/check-card",
       "methods": ["POST"],
       "dest": "index.js"
-    },
-    {
-      "src": "/api/stripe/session",
-      "methods": ["POST"],
-      "dest": "index.js"
-    },
-    {
-      "src": "/api/stripe/token",
-      "methods": ["POST"],
-      "dest": "index.js"
-    },
-    {
-      "src": "/api/stripe/charge",
-      "methods": ["POST"],
-      "dest": "index.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/styles/(.*)",
-      "dest": "/public/styles/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "/public/js/$1"
     },
     {
       "src": "/(.*)",
