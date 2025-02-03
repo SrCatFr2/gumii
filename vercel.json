@@ -17,6 +17,30 @@
       "dest": "index.js"
     },
     {
+      "src": "/styles/_variables\\.css",
+      "dest": "/public/styles/_variables.css"
+    },
+    {
+      "src": "/styles/_layout\\.css",
+      "dest": "/public/styles/_layout.css"
+    },
+    {
+      "src": "/styles/_components\\.css",
+      "dest": "/public/styles/_components.css"
+    },
+    {
+      "src": "/styles/_animations\\.css",
+      "dest": "/public/styles/_animations.css"
+    },
+    {
+      "src": "/js/matrix\\.js",
+      "dest": "/public/js/matrix.js"
+    },
+    {
+      "src": "/js/logo\\.js",
+      "dest": "/public/js/logo.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/index.html"
     }
