@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "index.js",
       "use": "@vercel/node"
     },
     {
@@ -12,74 +12,36 @@
   ],
   "routes": [
     {
-      "src": "/check-card",
+      "src": "/api/check",
       "methods": ["POST"],
-      "dest": "server.js"
-    },
-    {
-      "src": "/api/stripe/check",
-      "methods": ["POST"],
-      "dest": "server.js"
-    },
-    {
-      "src": "/api/form-nonce",
-      "methods": ["GET"],
-      "dest": "server.js"
-    },
-    {
-      "src": "/api/process-payment",
-      "methods": ["POST"],
-      "dest": "server.js"
-    },
-    {
-      "src": "/api/stripe/token",
-      "methods": ["POST"],
-      "dest": "server.js"
+      "dest": "index.js"
     },
     {
       "src": "/api/stripe/session",
       "methods": ["POST"],
-      "dest": "server.js"
+      "dest": "index.js"
+    },
+    {
+      "src": "/api/stripe/token",
+      "methods": ["POST"],
+      "dest": "index.js"
+    },
+    {
+      "src": "/api/stripe/charge",
+      "methods": ["POST"],
+      "dest": "index.js"
     },
     {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     },
     {
-      "src": "/styles/_variables\\.css",
-      "dest": "/public/styles/_variables.css"
+      "src": "/styles/(.*)",
+      "dest": "/public/styles/$1"
     },
     {
-      "src": "/styles/_layout\\.css",
-      "dest": "/public/styles/_layout.css"
-    },
-    {
-      "src": "/styles/_components\\.css",
-      "dest": "/public/styles/_components.css"
-    },
-    {
-      "src": "/styles/_animations\\.css",
-      "dest": "/public/styles/_animations.css"
-    },
-    {
-      "src": "/js/matrix\\.js",
-      "dest": "/public/js/matrix.js"
-    },
-    {
-      "src": "/js/logo\\.js",
-      "dest": "/public/js/logo.js"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/public/assets/$1"
-    },
-    {
-      "src": "/(.*)\\.ico",
-      "dest": "/public/$1.ico"
-    },
-    {
-      "src": "/(.*)\\.png",
-      "dest": "/public/$1.png"
+      "src": "/js/(.*)",
+      "dest": "/public/js/$1"
     },
     {
       "src": "/(.*)",
