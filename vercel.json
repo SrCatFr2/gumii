@@ -87,8 +87,5 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "STRIPE_PUBLIC_KEY": "@stripe-public-key",
-    "STRIPE_SECRET_KEY": "@stripe-secret-key"
-  }
+    "NODE_ENV": "production"
 }
